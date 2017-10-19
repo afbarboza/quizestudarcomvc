@@ -1,0 +1,37 @@
+@font-face {
+	font-family: "custom_font1";
+	src: url('all_things.ttf') format('truetype');
+}
+
+header {
+	font-family: "custom_font1";
+	font-size: 500%;
+	color: white;
+	text-align: center;
+}
+
+body {
+	background-color: #00ace6;
+	background-image:url("background1.png");
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+}
+
+.input_form {
+	border-radius:	 45px;
+	overflow: 	 hidden;
+	perspective: 	 1px;
+	border-collapse: collapse;
+	border-width:	 2px;
+	border-style:	 solid;
+	border-color:	 white;
+	text-align:	 center;
+}
+
+.form_button {
+	height: 60px;
+	width: 60px;
+}
