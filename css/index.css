@@ -57,6 +57,10 @@ footer {
 	background-image:url("imgs/background3.png");
 }
 
+#answer {
+	background-image:url("imgs/background4.png");
+}
+
 /* for god sake... put those on another file... */
 
 .li_item {
@@ -144,15 +148,28 @@ footer {
 }
 
 .create_question {
+	font-family: "custom_font1";
 	margin-top:0.5cm;
 	margin-bottom: 0.5cm;
 	margin-left: 1.0cm;
 	margin-right:1.0cm;
+	text-align: justify;
+	text-justify: inter-word;
 	/* float: inline-block;*/
 }
 
 .create_text {
 	border-radius: 5px;	
+}
+
+
+.question_lbl {
+	text-align: justify;
+	text-justify: inter-word;
+	margin-bottom: 10.5cm;
+	margin-left: 0.5cm;
+	margin-right:0.5cm;
+	margin-bottom: 0.7cm;
 }
 
 /* some specific graphic elements */
