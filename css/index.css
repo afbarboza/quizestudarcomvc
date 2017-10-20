@@ -77,8 +77,11 @@ footer {
 
 .container2 {
 	display: flex;
-	justify-content: center;
-	top: 150px;
+	position: absolute;
+	width: 500px;
+	top: 130px;
+	right: 70%;
+	left: 30%;
 }
 
 .input_form {
@@ -136,7 +139,7 @@ footer {
 
 #op_sidebar {
 	position: fixed;
-	top: 150px;
+	top: 130px;
 	right:40px;'
 }
 
