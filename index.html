@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<html>
 		<head>
 			<meta charset="utf-8">
-			<title> Quizz </title>
+			<title> .:Quizz:. </title>
 			<link rel="stylesheet" type="text/css" href="css/index.css">
 			<link rel="stylesheet" type="text/css" href="css/flaticon.css">
-			<script src="js/index.js"></script>
+			<script src="./js/jquery-3.2.1.js"></script>
+			<script src="./js/index.js"></script>
 		</head>
 			<header align="center">
 				<p>Quiz Land</p>
 			</header>
 
-		<div class="container">
-			<div class="input_form">
-					<body>
-						<img src="css/img3.png" alt="Vamos começar! (:" align="middle">
-						<form action="" method="GET">
-							<input class="form_button" type="image" src="css/play-button-1.svg" alt="Iniciar" onClick="gotoNextView()"/>
+			<body id="index">
+				<div class="container">
+					<div class="input_form">
+						<img src="css/imgs/img3.png" alt="Vamos começar! (:" align="middle">
+						<form onsubmit="return false">
+						<input id="index_init" class="form_button" type="image" src="css/icons/play-button-1.svg"/>
 						</form>
-					</body>
-			</div>
-		</div>
+					</div>
+				</div>
+			</body>
 </html>

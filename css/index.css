@@ -1,8 +1,11 @@
+
+/* defining some nice font */
 @font-face {
 	font-family: "custom_font1";
-	src: url('all_things.ttf') format('truetype');
+	src: url('fonts/all_things.ttf') format('truetype');
 }
 
+/* general configurations for html tags */
 header {
 	font-family: "custom_font1";
 	font-size: 500%;
@@ -10,18 +13,76 @@ header {
 	text-align: center;
 }
 
-body {
+aside {
+	float: right;
+}
+
+ul {
+	float: right;
+	text-align: left;
+	overflow: auto;
+	height: 250px;
+}
+
+label {
+	font-family: "custom_font1";
+	font-size: medium;
+	color: white;
+}
+
+footer {
+	margin-top: 1.5cm;
+}
+
+/* main views */
+#index {
 	background-color: #00ace6;
-	background-image:url("background1.png");
+	background-image:url("imgs/background1.png");
+}
+
+#dashboard {
+	background-image:url("imgs/background2.png");
+}
+
+#dash_background {
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:-5%;
+	width:30%;
+	height:30%;
+}
+
+#create {
+	background-image:url("imgs/background3.png");
+}
+
+/* for god sake... put those on another file... */
+
+.li_item {
+	font-family: "custom_font1";
+	font-size:150%;
+	text-align: left;
+	margin-top:0.5cm;
+	margin-bottom: 0.5cm;
+	margin-left: 1.0cm;
+	margin-right:8.0cm;
+	width:300px;
 }
 
 .container {
 	display: flex;
+	margin: 0 auto;	
+}
+
+.container2 {
+	display: flex;
 	justify-content: center;
+	top: 150px;
 }
 
 .input_form {
-	border-radius:	 45px;
+	border-radius:	 15px;
 	overflow: 	 hidden;
 	perspective: 	 1px;
 	border-collapse: collapse;
@@ -29,9 +90,81 @@ body {
 	border-style:	 solid;
 	border-color:	 white;
 	text-align:	 center;
+	margin-left:	 auto;
+	margin-right:	 auto;
 }
 
+.input_form2 {
+	border-radius:	 15px;
+	overflow: 	 hidden;
+	perspective: 	 1px;
+	border-collapse: collapse;
+	border-width:	 2px;
+	border-style:	 solid;
+	border-color:	 white;
+	text-align:	 center;
+	margin-left:	 auto;
+	margin-right:	 auto;
+}
 .form_button {
 	height: 60px;
 	width: 60px;
+	font-family: "custom_font1";
+	font-size: medium;
+	color: white;
+}
+
+.sidebar_button {
+	height: 50px;
+	width: 50px;
+	font-family: "custom_font1";
+	font-size: medium;
+	color: white;
+}
+
+.elem {
+	display: float;
+}
+
+.btn_lbl {
+	align: center;
+	margin-top:1.5cm;
+	margin-bottom: 0.5cm;
+	margin-left: 1.0cm;
+	margin-right:1.0cm;
+}
+
+#op_sidebar {
+	position: fixed;
+	top: 150px;
+	right:40px;'
+}
+
+.create_question {
+	margin-top:0.5cm;
+	margin-bottom: 0.5cm;
+	margin-left: 1.0cm;
+	margin-right:1.0cm;
+	/* float: inline-block;*/
+}
+
+.create_text {
+	border-radius: 5px;	
+}
+
+/* some specific graphic elements */
+#create_sidebar {
+	float: none;
+}
+
+#create_img {
+	height: 300px;
+	width: 300px;
+}
+
+#create_div {
+	position: fixed;
+	top: 150px;
+	float: none;
+	margin: 0 auto;
 }

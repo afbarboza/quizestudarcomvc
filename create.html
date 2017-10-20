@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+		<head>
+			<meta charset="utf-8">
+			<title> .:Quizz:. </title>
+			<link rel="stylesheet" type="text/css" href="css/index.css">
+			<link rel="stylesheet" type="text/css" href="css/flaticon.css">
+			<script src="./js/jquery-3.2.1.js"></script>
+			<script src="./js/index.js"></script>
+		</head>
+
+			<body id="create" align="center">
+
+				<header align="center" style="position:relative;top:-60px;">
+					<p>Quiz Land</p>
+				</header>
+
+				<!-- <aside id="create_sidebar" style="display:inline" >
+					<img  id="create_img"  src="css/imgs/create_img.png"></img>
+				</aside> -->
+
+				<aside style="display:inline; float:left">
+					<div class="container" style="position: fixed;">
+						<div>
+		       					<img  id="create_img"  src="css/imgs/create_img.png"></img>         		       
+						</div>
+					</div>
+				</aside>
+
+
+				<section style="display:inline; margin: 0 auto;">
+				<div class="container" style="magin: 0 auto;">
+					<div class="input_form">
+						<form onsubmit="return false">
+							<div class="create_question">
+								<label style="float:left">Questão 1</label>
+								<br>
+								<textarea class="create_text" cols="50" rows="5"></textarea>
+							</div>
+
+
+							<div class="create_question">
+								<label style="float:left">Resposta Certa</label>
+								<br>
+								<textarea class="create_text" cols="50" rows="2"></textarea>
+							</div>
+
+							<div class="create_question">
+								<label style="float:left">Resposta Errada 1</label>
+								<br>
+								<textarea class="create_text"  cols="50" rows="2"></textarea>
+							</div>
+
+							<div class="create_question">
+								<label style="float:left">Resposta Errada 2</label>
+								<br>
+								<textarea class="create_text"  cols="50" rows="2"></textarea>
+							</div>
+
+							<div class="create_question">
+								<label style="float:left">Resposta Errada 3</label>
+								<br>
+								<textarea class="create_text"  cols="50" rows="2"></textarea>
+							</div>
+						</form>
+					</div>
+				</div>
+				</section>
+
+				<aside style="display:inline">
+					<div class="container">
+						<div class="input_form" id="op_sidebar">
+                        		                <!-- side by side elements -->
+							<div class="btn_lbl">
+							<div class="elem"><input class="sidebar_button" type="image" src="css/icons/plus.svg" value="criar"></input> </div>
+							<div class="elem"><label for="myButton">adicionar questão</label></div>
+							</div>
+		
+							<div class="btn_lbl">
+							<div class="elem"><input class="sidebar_button" type="image" src="css/icons/save.svg" value="criar"></input> </div>
+							<div class="elem"><label for="myButton">finalizar quiz</label></div>
+							</div>
+
+							<div class="btn_lbl">
+							<div class="elem"><input class="sidebar_button" type="image" src="css/icons/error.svg" value="criar"></input> </div>
+							<div class="elem"><label for="myButton">cancelar</label></div>
+							</div>
+
+						</div>
+					</div>
+				</aside>
+
+			</body>
+</html>

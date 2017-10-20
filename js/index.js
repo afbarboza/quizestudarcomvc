@@ -1,3 +1,6 @@
-function gotoNextView() {
-	alert('Indo para a próxima página!');
-}
+$(document).ready(function() {
+	$("#index_init").click(function() {
+		window.location.assign("./dashboard.html");
+		return false;
+	});
+});
