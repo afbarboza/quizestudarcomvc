@@ -52,6 +52,9 @@ function cleanQuestionFields() {
  * storeQuestion - stores the recently created question
  */
 function storeQuestion() {
+	/* stores the number of the question */
+	var questionIndex = 0;
+
 	/* gets view inputs */
 	var statement = $("#statement_question").val();
 	var rans = $("#right_answer_txt").val();
@@ -71,6 +74,7 @@ function storeQuestion() {
 	/* increments the question counter */
 	var labelValue = document.getElementById("question_tag").textContent;
 	var currentID = parseInt(getQuestionId(labelValue));
+	questionIndex = currentID;
 	var nextQuestionId = currentID + 1;
 	document.getElementById("question_tag").textContent = "Questão " + nextQuestionId;
 
@@ -78,6 +82,53 @@ function storeQuestion() {
 	var question = new Question(currentID, statement, rans, wans1, wans2, wans3);
 	question.setQuestionOwner(quizTitle);
 	question.saveQuestion();
+
+	return questionIndex;
+}
+
+/**
+ * incrementQuizCounter - increment the number of
+ *			quizes created by the user.
+ */
+function incrementQuizCounter() {
+	var strValue = localStorage.getItem("numberOfQuizes");
+	value = parseInt(strValue);
+	value++;
+	localStorage.setItem("numberOfQuizes", value);
+	return value;
+}
+
+
+/**
+ *
+ * pushQuiz - saves the quiz name and its index.
+ *
+ * This function it pretty useful in the dashboard view.
+ * Once we save the index of the quiz, we are able to
+ * retrive its name and checks whether the quiz is already
+ * deleted or not.
+ *
+ */
+function pushQuiz(quizIndex, numberOfQuestions) {
+	/* step 1: we must retrieve the quiz name */
+	var quizName = localStorage.getItem("lastCreatedQuiz");
+
+	/*step 2: we must map the quiz index to its name 
+	* we will do it using some kingd of Map data structure
+	*/
+	localStorage.setItem("quiz"+quizIndex, quizName);
+
+	/*
+	* step 3: we also must record the number of questions
+	* in each quiz
+	*/
+	localStorage.setItem("number_questions_quiz" + quizIndex, numberOfQuestions);
+
+	/*
+	* step 4: we als must mark the quiz as valid
+	* (i.e.: it was not deleted yet)
+ 	*/
+	localStorage.setItem("valid_quiz"+quizIndex, "valid");
 }
 
 $(document).ready(function() {
@@ -97,7 +148,14 @@ $(document).ready(function() {
 		e.preventDefault();
 	
 		/* stores the created question */
-		storeQuestion();
+		var numberOfQuestions = storeQuestion();
+
+		/*increment global counter of quizes */
+		var quizIndex = incrementQuizCounter();
+
+		/*TODO: save quiz*/
+		pushQuiz(quizIndex, numberOfQuestions);
+		//console.log("esse quiz tem " + numberOfQuestions + " questoes...\n");
 
 		/* back to the main page */
 		window.location.assign("./dashboard.html");	

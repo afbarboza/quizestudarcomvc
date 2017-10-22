@@ -74,6 +74,18 @@ footer {
 	width:300px;
 }
 
+
+.empty_li_item {
+	font-family: "custom_font1";
+	font-size:150%;
+	text-align: left;
+	margin-top:0.5cm;
+	margin-bottom: 0.5cm;
+	margin-left: 1.0cm;
+	margin-right:8.0cm;
+	width:300px;
+}
+
 .container {
 	display: flex;
 	margin: 0 auto;	

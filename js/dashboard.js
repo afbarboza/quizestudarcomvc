@@ -15,23 +15,48 @@ function saveLastCreatedQuizName(lastCreatedQuizName) {
 }
 
 /**
- * for debug purposes only...
- *
+ * get the number of quizes already created by the user
  */
 function getNumberOfQuizes() {
-	var value = localStorage.getItem("numberOfQuizes");
-	if (value == null) {
-		/* nao ha quizes criados */
-		value = 0;
+	var value = 0;
+	var strValue = localStorage.getItem("numberOfQuizes");
+	if (strValue == null) {
+		/* there is no created quizes  */
 		localStorage.setItem("numberOfQuizes", 0);
+	} else {
+		/* there is already created quizes */
+		value = parseInt(strValue);
 	}
+
 	return value;
 }
 
+function getSelectQuizName(hrefID) {
+}
+
 $(document).ready(function() {
-	if (getNumberOfQuizes() == 0) {
+
+	/* lits all the created quizes */
+	var quizCounter = getNumberOfQuizes();
+	if (quizCounter == 0) {
 		alert("não há quizes criados");
-	}	
+		for (i = 0; i < 5; i++) {
+			var emptyItem = '<li class="empty_li_item"> <a href="https://www.w3schools.com" style="text-decoration: none; list-style-type: none; list-style: none;">&nbsp</a></li>';
+			$("#list_quiz").append(emptyItem);
+		}
+	} else {
+		/* for debug purposes only */
+		var msg = "";
+		for (i = 1; i < (quizCounter+1); i++) {
+			var hrefID = "quiz_link" + i;
+			msg = localStorage.getItem("quiz" + i);
+			var quizItem = '<li class="li_item" id="' + hrefID  + '"><a href="" style="text-decoration: none">' + msg + '</a></li>';
+			$("#list_quiz").append(quizItem);
+			console.log(msg);
+		}
+	}
+
+	
 
 	$("#add_quiz").click(function() {
 		var quizTitle = prompt("Dê um nome ao seu quiz", "QuizLand :) ");
@@ -40,5 +65,11 @@ $(document).ready(function() {
 		alert("substituindo...");
 		window.location.assign("./create.html");
 		return false;
+	});
+
+	$(".li_item").click(function(e) {
+		e.preventDefault();
+		
+		alert(document.getElementById(this.id).textContent);
 	});
 });
