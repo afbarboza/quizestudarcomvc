@@ -6,7 +6,9 @@
 			<link rel="stylesheet" type="text/css" href="css/index.css">
 			<link rel="stylesheet" type="text/css" href="css/flaticon.css">
 			<script src="./js/jquery-3.2.1.js"></script>
-			<script src="./js/index.js"></script>
+			<script src="./js/model_question.js"></script>
+			<script src="./js/model_quiz.js"></script>
+			<script src="./js/create.js"></script>
 		</head>
 
 			<body id="create" align="center">
@@ -29,34 +31,34 @@
 					<div class="input_form">
 						<form onsubmit="return false">
 							<div class="create_question">
-								<label style="float:left">Questão 1</label>
+								<label style="float:left" id="question_tag" for="1" value="txt__">Questão 1</label>
 								<br>
-								<textarea class="create_text" cols="50" rows="5"></textarea>
+								<textarea class="create_text" cols="50" rows="5" required="required" id="statement_question"></textarea>
 							</div>
 
 
 							<div class="create_question">
 								<label style="float:left">Resposta Certa</label>
 								<br>
-								<textarea class="create_text" cols="50" rows="2"></textarea>
+								<textarea class="create_text" cols="50" rows="2" id="right_answer_txt" required="required"></textarea>
 							</div>
 
 							<div class="create_question">
 								<label style="float:left">Resposta Errada 1</label>
 								<br>
-								<textarea class="create_text"  cols="50" rows="2"></textarea>
+								<textarea class="create_text"  cols="50" rows="2" id="wrong_answer_txt1" required="required"></textarea>
 							</div>
 
 							<div class="create_question">
 								<label style="float:left">Resposta Errada 2</label>
 								<br>
-								<textarea class="create_text"  cols="50" rows="2"></textarea>
+								<textarea class="create_text"  cols="50" rows="2" id="wrong_answer_txt2" required="required"></textarea>
 							</div>
 
 							<div class="create_question">
 								<label style="float:left">Resposta Errada 3</label>
 								<br>
-								<textarea class="create_text"  cols="50" rows="2"></textarea>
+								<textarea class="create_text"  cols="50" rows="2" id="wrong_answer_txt3" required="required"></textarea>
 							</div>
 						</form>
 					</div>
@@ -65,10 +67,10 @@
 
 				<aside style="display:inline">
 					<div class="container">
-						<div class="input_form" id="op_sidebar">
+						<form method="POST"><div class="input_form" id="op_sidebar">
                         		                <!-- side by side elements -->
 							<div class="btn_lbl">
-							<div class="elem"><input class="sidebar_button" type="image" src="css/icons/plus.svg" value="criar"></input> </div>
+							<div class="elem"><input class="sidebar_button" type="image" src="css/icons/plus.svg" value="criar" id="create_save"></input> </div>
 							<div class="elem"><label for="myButton" id="add_question">adicionar questão</label></div>
 							</div>
 		
@@ -82,7 +84,7 @@
 							<div class="elem"><label for="myButton">cancelar</label></div>
 							</div>
 
-						</div>
+						</div></form>
 					</div>
 				</aside>
 
