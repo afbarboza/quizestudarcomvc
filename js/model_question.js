@@ -64,7 +64,7 @@ class Question {
 	* save quetions in local storage
 	*/
 	saveQuestion() {
-		if (typeofStorage == undefined) {
+		if (typeof(Storage) == undefined) {
 			alert("Você precisa habilitar o uso de cookies antes de usar o site!");
 			return;
 		}
@@ -91,7 +91,6 @@ class Question {
 		this.right_answer = localStorage.getItem(this.quizTitle  + this.id + "right_answer");
 		this.wrong_answer1 = localStorage.getItem(this.quizTitle + this.id + "wrong_answer1");
 		this.wrong_answer2 = localStorage.getItem(this.quizTitle + this.id + "wrong_answer2");
-		this.wrong_answer3 = localStorage.getItem(this.quizTitle + this.id + "wrong_answer3");
-		
+		this.wrong_answer3 = localStorage.getItem(this.quizTitle + this.id + "wrong_answer3");	
 	}
 }
