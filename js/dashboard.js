@@ -58,6 +58,10 @@ function getIndexQuiz(quizName) {
 	return 0;
 }
 
+/**
+ * storeSelectedQuizInfo - sets information about the to be created/deleted/edited quiz 
+ *
+ */
 function storeSelectedQuizInfo(quizTitle, quizIndex) {
 	var strCurrQuizSize = "";
 	var currQuizSize = 0;
@@ -69,7 +73,6 @@ function storeSelectedQuizInfo(quizTitle, quizIndex) {
 	var strCurrQuizSize = localStorage.getItem("number_questions_quiz" + quizIndex);
 	currQuizSize = parseInt(strCurrQuizSize);
 	localStorage.setItem("currentUserQuizSize", currQuizSize);
-	alert("o tamanho do quiz selecionado é de " + currQuizSize + " questoes");
 }
 
 /**
@@ -89,6 +92,40 @@ function isDeletedQuiz(index) {
 		return false;
 	}
 }
+
+
+/**
+ * isAllDeleted - checks whether all the quizes had already been
+ *	deleted.
+ *
+ * returns true, if there is no existent quiz.
+ *	false, if there is at least one created quiz.
+ */
+
+function isAllDeleted() {
+	var nbrQuizes = getNumberOfQuizes();
+	for (i = 1; i < (nbrQuizes + 1); i++) {
+		if (!isDeletedQuiz(i)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+/**
+ * setEditQuizBoxesVisibility - sets the visibility of edit check boxes
+ * 
+ */
+function setEditQuizBoxesVisibility(value)
+{
+	var max = getNumberOfQuizes();
+	for (i = 1; i < (max + 1); i++) {
+		if (!isDeletedQuiz(i))
+			document.getElementById("editCheckBox" + i).style.visibility = value;
+	}
+}
+
+
 
 /**
  * setDeleteQuizBoxesVisibility - sets the visibility of delete check boxes
@@ -119,7 +156,6 @@ function handleDeleteQuiz() {
 	var nbrQuizes = getNumberOfQuizes();
 
 	/* marks the quiz as deleted */
-	//localStorage.setItem("valid_quiz" + deletedQuizIdx, "invalid");
 	localStorage.removeItem("quiz" + deletedQuizIdx);
 
 	/* for each checkbox, makes it invisible again */
@@ -130,6 +166,28 @@ function handleDeleteQuiz() {
 
 	/* automatically reloads the page */
 	location.reload();
+}
+
+/**
+ * handleEditQuiz - edit the user quiz.
+ *
+ */
+function handleEditQuiz() {
+	alert('editando...');
+
+	/* finds out the quiz name by traversing DOM tree */
+	var editedQuizName = $(this).siblings().html();
+
+	/* finds the to be edited quiz index */
+	var editedQuizIdx = getIndexQuiz(editedQuizName);
+
+	/* setting paramater to edit the question */
+	//storeSelectedQuizInfo(selectedQuiz, selectedQuizIdx);
+	storeSelectedQuizInfo(editedQuizName, editedQuizIdx);
+
+	/* replacing the page */
+	window.location.assign("./edit.html");
+
 }
 
 /**
@@ -178,6 +236,7 @@ $(document).ready(function() {
 
 			/* also adds the checkbox to delete questions */
 			var checkBox = '<input id="delCheckBox' + i + '"  type="checkbox" style="visibility: hidden"/>';
+			var checkBox2 = '<input id="editCheckBox' + i + '"  type="checkbox" style="visibility: hidden"/>';
 
 			/*checks whether the quiz was deleted by the user */
 			if (isDeletedQuiz(i)) {
@@ -188,7 +247,7 @@ $(document).ready(function() {
 			msg = localStorage.getItem("quiz" + i);
 
 			/*creates the HTML string which represents the li quiz item */
-			var quizItem = '<li class="li_item"><a class="li_item_quiz" href="" style="text-decoration: none" id="' + hrefID  + '">' + msg + '</a>' + bnsp + checkBox + '</li>';
+			var quizItem = '<li class="li_item"><a class="li_item_quiz" href="" style="text-decoration: none" id="' + hrefID  + '">' + msg + '</a>' + bnsp + checkBox + checkBox2 + '</li>';
 
 			/* adds the the HTML DOM tree */
 			$("#list_quiz").append(quizItem);
@@ -207,9 +266,46 @@ $(document).ready(function() {
 		return false;
 	});
 
+	/* handler to the 'edit the quiz' button */
+	$("#edit_quiz").click(function() {
+		/* sanity check: we cannot edit a quiz which does not exist */
+		var nbrQuizes = getNumberOfQuizes();
+		if (nbrQuizes == 0) {
+			alert("Não quizes a serem editados.");
+			return;
+		}
 
-	/* handler to edit the quiz */
+		if (isAllDeleted()) {
+			alert("Não quizes a serem editados.");
+			return;
+		}
+
+		/* for each check box, assign the check box handler */		
+		for (i = 1; i < (nbrQuizes + 1); i++) {
+			$("#editCheckBox" + i).change(handleEditQuiz);
+		}
+
+		/* set the visibility of all check boxes */
+		for (i = 1; i < (nbrQuizes + 1); i++) {
+			setEditQuizBoxesVisibility("visible");
+		}
+
+	});
+
+
+	/* handler to 'delete the quiz' button */
 	$("#del_quiz").click(function(e) {
+		/* sanity check: we cannot delte a quiz which does not exist */
+		var nbrQuizes = getNumberOfQuizes();
+		if (nbrQuizes == 0) {
+			alert("Não quizes a serem excluídos.");
+			return;
+		}
+
+		if (isAllDeleted()) {
+			alert("Não quizes a serem excluídos.");
+			return;
+		}
 
 		var nbrQuizes = getNumberOfQuizes();
 
@@ -218,9 +314,8 @@ $(document).ready(function() {
 			$("#delCheckBox" + i).change(handleDeleteQuiz);
 		}
 
+		/* set the visibility of all check boxes */
 		for (i = 1; i < (nbrQuizes + 1); i++) {
-			//$("#delCheckBox" + i).attr("visibility", "visible");
-			//document.getElementById("delCheckBox" + i).style.visibility = "visible";
 			setDeleteQuizBoxesVisibility("visible");
 		}
 	});
