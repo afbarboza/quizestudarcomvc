@@ -230,7 +230,7 @@ $(document).ready(function() {
 			var hrefID = "quiz_link" + i;
 
 			/* just some bunch of white spaced */
-			var bnsp = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+			var bnsp = "&nbsp&nbsp&nbsp&nbsp";
 
 			/* also adds the checkbox to delete questions */
 			var checkBox = '<input id="delCheckBox' + i + '"  type="checkbox" style="visibility: hidden"/>';
@@ -245,7 +245,7 @@ $(document).ready(function() {
 			msg = localStorage.getItem("quiz" + i);
 
 			/*creates the HTML string which represents the li quiz item */
-			var quizItem = '<li class="li_item"><a class="li_item_quiz" href="" style="text-decoration: none" id="' + hrefID  + '">' + msg + '</a>' + bnsp + checkBox + checkBox2 + '</li>';
+			var quizItem = '<li class="li_item"><a class="li_item_quiz" href="https://afbarboza.github.io/quizestudarcomvc/answer.html" style="text-decoration: none" id="' + hrefID  + '">' + msg + '</a>' + bnsp + checkBox + checkBox2 + '</li>';
 
 			/* adds the the HTML DOM tree */
 			$("#list_quiz").append(quizItem);
