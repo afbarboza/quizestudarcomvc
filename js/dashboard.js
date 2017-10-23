@@ -31,12 +31,46 @@ function getNumberOfQuizes() {
 	return value;
 }
 
-function getSelectQuizName(hrefID) {
+/**
+ * getSelectedQuizName - gets the name of the selected quiz
+ *
+ */
+function getSelectedQuizName(hrefID) {
+	return (document.getElementById(hrefID).textContent);
+}
+
+/**
+ * getIndexQuiz - gets the index of the selected quiz
+ *
+ * @quizName - the name of the quiz
+ */
+function getIndexQuiz(quizName) {
+	var numberOfQuizes = getNumberOfQuizes();
+	for (i = 1; i < (numberOfQuizes + 1); i++) {
+		var tmpQuizName = localStorage.getItem("quiz" + i);
+		if (quizName.localeCompare(tmpQuizName) == 0)
+			return i;
+	}
+	return 0;
+}
+
+function storeSelectedQuizInfo(quizTitle, quizIndex) {
+	var strCurrQuizSize = "";
+	var currQuizSize = 0;
+
+	/* save the selected quiz to be done by the user */
+	localStorage.setItem("currentUserQuiz", quizTitle);
+
+	/* save the size of the selected quiz */
+	var strCurrQuizSize = localStorage.getItem("number_questions_quiz" + quizIndex);
+	currQuizSize = parseInt(strCurrQuizSize);
+	localStorage.setItem("currentUserQuizSize", currQuizSize);
+	alert("o tamanho do quiz selecionado é de " + currQuizSize + " questoes");
 }
 
 $(document).ready(function() {
 
-	/* lits all the created quizes */
+	/* lits all the created quizes after the page is loaded */
 	var quizCounter = getNumberOfQuizes();
 	if (quizCounter == 0) {
 		alert("não há quizes criados");
@@ -56,8 +90,7 @@ $(document).ready(function() {
 		}
 	}
 
-	
-
+	/* handler to the 'create new quiz' button */
 	$("#add_quiz").click(function() {
 		var quizTitle = prompt("Dê um nome ao seu quiz", "QuizLand :) ");
 		alert("O nome do seu quiz será " + quizTitle);
@@ -67,9 +100,21 @@ $(document).ready(function() {
 		return false;
 	});
 
+	/* handler to answer a new quiz */
 	$(".li_item").click(function(e) {
+		/* gets the quiz identifier */
 		e.preventDefault();
-		
-		alert(document.getElementById(this.id).textContent);
+		var selectedQuiz = getSelectedQuizName(this.id);
+		alert("selectedQuiz: " + selectedQuiz);
+
+		/* gets the quiz index */
+		var selectedQuizIdx = getIndexQuiz(selectedQuiz);
+		alert("o indice do quiz corrente é " + selectedQuizIdx);
+
+		/* store the informations about the selectec quiz to be done */
+		storeSelectedQuizInfo(selectedQuiz, selectedQuizIdx);
+
+		/* redirects the user to the answer quiz page */
+		window.location.assign("./answer.html")	;
 	});
 });
