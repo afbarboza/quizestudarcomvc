@@ -173,8 +173,6 @@ function handleDeleteQuiz() {
  *
  */
 function handleEditQuiz() {
-	alert('editando...');
-
 	/* finds out the quiz name by traversing DOM tree */
 	var editedQuizName = $(this).siblings().html();
 
@@ -271,12 +269,12 @@ $(document).ready(function() {
 		/* sanity check: we cannot edit a quiz which does not exist */
 		var nbrQuizes = getNumberOfQuizes();
 		if (nbrQuizes == 0) {
-			alert("Não quizes a serem editados.");
+			alert("Não há quizes a serem editados.");
 			return;
 		}
 
 		if (isAllDeleted()) {
-			alert("Não quizes a serem editados.");
+			alert("Não há quizes a serem editados.");
 			return;
 		}
 
@@ -298,12 +296,12 @@ $(document).ready(function() {
 		/* sanity check: we cannot delte a quiz which does not exist */
 		var nbrQuizes = getNumberOfQuizes();
 		if (nbrQuizes == 0) {
-			alert("Não quizes a serem excluídos.");
+			alert("Não há quizes a serem excluídos.");
 			return;
 		}
 
 		if (isAllDeleted()) {
-			alert("Não quizes a serem excluídos.");
+			alert("Não há quizes a serem excluídos.");
 			return;
 		}
 

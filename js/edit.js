@@ -1,5 +1,3 @@
-
-
 /**
  * validateForm - check for empty fields
  *
@@ -129,7 +127,6 @@ function pushQuiz(quizIndex, numberOfQuestions) {
 /**
  * getCurrentQuestionIndex - get the number of the current question
  *
- *
  */
 function getCurrentQuestionIndex() {
 	var currentQuestionIdx = 0;
@@ -161,6 +158,7 @@ function setCurrentQuestionStatement() {
 
         /*update the view */
         document.getElementById("statement_question").textContent = statement;
+	document.getElementById("question_tag").textContent = "Questão " + currentUserQuestionIdx;
 }
 
 
@@ -216,20 +214,28 @@ function retrieveCurrentQuestionInfo() {
 }
 
 
+function onloadInput() {
+	alert("carregando caixa de texto...");
+}
+
 $(document).ready(function() {
 
+	document.getElementById("wrong_answer_txt1").onload = onloadInput;
+
+	//$("#wrong_answer1").addEventListener("load", onloadInput);
 	retrieveCurrentQuestionInfo();
 
-	$("#create_save").click(function(e) {
-		
+	$("#create_save").click(function(e) {		
                 var lengthOfQuiz =  parseInt(localStorage.getItem("currentUserQuizSize"));
-                if (lengthOfQuiz >= (getCurrentQuestionIndex() + 1)) {
+		var currQuestionIdx = getCurrentQuestionIndex();
+
+                if (currQuestionIdx == lengthOfQuiz) {
 			/* prevents page from reloading */
 			e.preventDefault();
 
 			/* stores the created question */
 			storeQuestion();
-
+		
 			/* print out some user info */
                         alert(" Todas questões já foram editadas ");
                         finishCurrentQuiz();
@@ -238,16 +244,16 @@ $(document).ready(function() {
                         window.location.assign("./dashboard.html");
                 } else {
 			/* prevents page from reloading */
-			e.preventDefault();
+			//e.preventDefault();
 
 			/* stores the created question */
 			storeQuestion();
 
-			/* clean text field areas */
-			cleanQuestionFields();
-
 			/* increments global counter of questions */
 			incCurrentQuestionIndex();
+
+			//cleanQuestionFields();
+			retrieveCurrentQuestionInfo();
 
 			/* reloads the page */
 			location.reload();
@@ -258,8 +264,11 @@ $(document).ready(function() {
 	$("#create_finish").click(function(e) {
 		/* prevents page from reloading */
 		e.preventDefault();
-	
-		/* ends the edition of the current quiz */
+
+		/* stores the created question */
+		storeQuestion();
+
+		/* finish quiz */
 		finishCurrentQuiz();
 
 		/* back to the main page */
@@ -267,11 +276,10 @@ $(document).ready(function() {
 	});
 
 	$("#create_cancel").click(function(e) {
-		/* prevents page from reloading */
-		e.preventDefault();
+		/* finish quiz */
+		finishCurrentQuiz();
 
-		/*clean all fields for the next question */
-		cleanQuestionFields();
-
+		/* back to the main page */
+		window.location.assign("./dashboard.html");	
 	});
 });

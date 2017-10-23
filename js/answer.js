@@ -218,7 +218,6 @@ $(document).ready(function() {
 	setWrongAnswer(answerSequence, currentQuiz, currentIdx, 2);
 	setWrongAnswer(answerSequence, currentQuiz, currentIdx, 3);
 
-
 	/* adds a handler to the click listener of the next button */
 	$("#next_question").click(function() {
 
@@ -227,9 +226,9 @@ $(document).ready(function() {
 			alert("Você deve selecionar uma resposta!");
 			return;
 		}
+
 		/* checks whether the user selected the right answer*/
 		if (probeRightAnswer() == true) {
-			alert("parabéns! resposta certa!");
 			incUserScore();
 		}
 
@@ -237,7 +236,7 @@ $(document).ready(function() {
 		lengthOfQuiz =  parseInt(localStorage.getItem("currentUserQuizSize"));
 		if (lengthOfQuiz == getCurrentQuestionIndex()) {
 			alert("Parabéns! Você finalizou o quiz!");
-			alert("Sua porcentagem de acertos foi de " + getPercentageScoreHits() + "%");
+			alert("Sua porcentagem de acertos foi de " + Math.floor(getPercentageScoreHits()) + "%");
 			finishCurrentQuiz();
 			window.location.assign("./dashboard.html");
 		} else {
