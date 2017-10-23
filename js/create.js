@@ -98,7 +98,6 @@ function incrementQuizCounter() {
 	return value;
 }
 
-
 /**
  *
  * pushQuiz - saves the quiz name and its index.

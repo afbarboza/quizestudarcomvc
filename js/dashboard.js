@@ -36,7 +36,9 @@ function getNumberOfQuizes() {
  *
  */
 function getSelectedQuizName(hrefID) {
-	return (document.getElementById(hrefID).textContent);
+	var retval = document.getElementById(hrefID).textContent;
+	console.log(retval);
+	return retval;
 }
 
 /**
@@ -45,6 +47,8 @@ function getSelectedQuizName(hrefID) {
  * @quizName - the name of the quiz
  */
 function getIndexQuiz(quizName) {
+	console.log(quizName);
+
 	var numberOfQuizes = getNumberOfQuizes();
 	for (i = 1; i < (numberOfQuizes + 1); i++) {
 		var tmpQuizName = localStorage.getItem("quiz" + i);
@@ -68,6 +72,87 @@ function storeSelectedQuizInfo(quizTitle, quizIndex) {
 	alert("o tamanho do quiz selecionado é de " + currQuizSize + " questoes");
 }
 
+/**
+ * isDeletedQuiz - checks whether the quiz were deleted.
+ *
+ * @index: the index of the quiz which we wanna find out 
+ * whether has already been deleted by the user.
+ *
+ * returns true, if the quiz is deleted.
+ *	flase, otherwise.
+ */
+function isDeletedQuiz(index) {
+	var quizTitle = localStorage.getItem("quiz" + index);
+	if (quizTitle == null) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * setDeleteQuizBoxesVisibility - sets the visibility of delete check boxes
+ * 
+ */
+function setDeleteQuizBoxesVisibility(value)
+{
+	var max = getNumberOfQuizes();
+	for (i = 1; i < (max + 1); i++) {
+		if (!isDeletedQuiz(i))
+			document.getElementById("delCheckBox" + i).style.visibility = value;
+	}
+}
+
+/**
+ * handleDeleteQuiz - deletes the user quiz.
+ *
+ */
+function handleDeleteQuiz() {
+	/* finds out the quiz name by traversing DOM tree */
+	var deletedQuizName = $(this).siblings().html();
+	console.log(deletedQuizName);
+
+	/* finds the to be deleted quiz index */
+	var deletedQuizIdx = getIndexQuiz(deletedQuizName);
+
+	/* gets the number of quizes */
+	var nbrQuizes = getNumberOfQuizes();
+
+	/* marks the quiz as deleted */
+	//localStorage.setItem("valid_quiz" + deletedQuizIdx, "invalid");
+	localStorage.removeItem("quiz" + deletedQuizIdx);
+
+	/* for each checkbox, makes it invisible again */
+	for (i = 1; i < (nbrQuizes + 1); i++) {
+		if (!isDeletedQuiz(i))
+			setDeleteQuizBoxesVisibility("false");
+	}
+
+	/* automatically reloads the page */
+	location.reload();
+}
+
+/**
+ * fillEmptySpaces - make some dummy graphical adjustments to the HTML DOM tree
+ *
+ *
+ */
+function fillEmptySpaces() {
+	var nbrQuizes = getNumberOfQuizes();
+
+	for (i = 1; i < (nbrQuizes + 1); i++) {
+		if (!isDeletedQuiz(i))
+			return;
+	}
+
+	alert("não há quizes criados");
+	for (i = 0; i < 5; i++) {
+		var emptyItem = '<li class="empty_li_item"> <a href="" style="text-decoration: none; list-style-type: none; list-style: none;">&nbsp</a></li>';
+		$("#list_quiz").append(emptyItem);
+	}
+}
+
+
 $(document).ready(function() {
 
 	/* lits all the created quizes after the page is loaded */
@@ -75,17 +160,40 @@ $(document).ready(function() {
 	if (quizCounter == 0) {
 		alert("não há quizes criados");
 		for (i = 0; i < 5; i++) {
-			var emptyItem = '<li class="empty_li_item"> <a href="https://www.w3schools.com" style="text-decoration: none; list-style-type: none; list-style: none;">&nbsp</a></li>';
+			var emptyItem = '<li class="empty_li_item"> <a href="" style="text-decoration: none; list-style-type: none; list-style: none;">&nbsp</a></li>';
 			$("#list_quiz").append(emptyItem);
 		}
 	} else {
-		/* for debug purposes only */
+		/* some graphical trick to improve UX */
+		fillEmptySpaces();
+
+		/* adds a li item for each quiz */
 		var msg = "";
 		for (i = 1; i < (quizCounter+1); i++) {
+			/*step 1: create an graphic unique identifier for the quiz*/
 			var hrefID = "quiz_link" + i;
+
+			/* just some bunch of white spaced */
+			var bnsp = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+
+			/* also adds the checkbox to delete questions */
+			var checkBox = '<input id="delCheckBox' + i + '"  type="checkbox" style="visibility: hidden"/>';
+
+			/*checks whether the quiz was deleted by the user */
+			if (isDeletedQuiz(i)) {
+				continue;
+			}
+
+			/* gets the name of the quiz to be displayed */
 			msg = localStorage.getItem("quiz" + i);
-			var quizItem = '<li class="li_item" id="' + hrefID  + '"><a href="" style="text-decoration: none">' + msg + '</a></li>';
+
+			/*creates the HTML string which represents the li quiz item */
+			var quizItem = '<li class="li_item"><a class="li_item_quiz" href="" style="text-decoration: none" id="' + hrefID  + '">' + msg + '</a>' + bnsp + checkBox + '</li>';
+
+			/* adds the the HTML DOM tree */
 			$("#list_quiz").append(quizItem);
+
+			/* for debug purposes only */
 			console.log(msg);
 		}
 	}
@@ -95,21 +203,35 @@ $(document).ready(function() {
 		var quizTitle = prompt("Dê um nome ao seu quiz", "QuizLand :) ");
 		alert("O nome do seu quiz será " + quizTitle);
 		saveLastCreatedQuizName(quizTitle);
-		alert("substituindo...");
 		window.location.assign("./create.html");
 		return false;
 	});
 
+
+	/* handler to edit the quiz */
+	$("#del_quiz").click(function(e) {
+
+		var nbrQuizes = getNumberOfQuizes();
+
+		/* for each check box, assign the check box handler */		
+		for (i = 1; i < (nbrQuizes + 1); i++) {
+			$("#delCheckBox" + i).change(handleDeleteQuiz);
+		}
+
+		for (i = 1; i < (nbrQuizes + 1); i++) {
+			//$("#delCheckBox" + i).attr("visibility", "visible");
+			//document.getElementById("delCheckBox" + i).style.visibility = "visible";
+			setDeleteQuizBoxesVisibility("visible");
+		}
+	});
+
 	/* handler to answer a new quiz */
-	$(".li_item").click(function(e) {
+	$(".li_item_quiz").click(function(e) {
 		/* gets the quiz identifier */
-		e.preventDefault();
 		var selectedQuiz = getSelectedQuizName(this.id);
-		alert("selectedQuiz: " + selectedQuiz);
 
 		/* gets the quiz index */
 		var selectedQuizIdx = getIndexQuiz(selectedQuiz);
-		alert("o indice do quiz corrente é " + selectedQuizIdx);
 
 		/* store the informations about the selectec quiz to be done */
 		storeSelectedQuizInfo(selectedQuiz, selectedQuizIdx);

@@ -29,7 +29,8 @@ function incCurrentQuestionIndex() {
 }
 
 function finishCurrentQuiz() {
-	 localStorage.setItem("currentQuestionCounter", 1);
+	localStorage.setItem("currentQuestionCounter", 1);
+	localStorage.setItem("curr_score", 0);
 	/*TODO: finish quiz code goes here... */
 }
 
@@ -237,7 +238,8 @@ $(document).ready(function() {
 		if (lengthOfQuiz == getCurrentQuestionIndex()) {
 			alert("Parabéns! Você finalizou o quiz!");
 			alert("Sua porcentagem de acertos foi de " + getPercentageScoreHits() + "%");
-			finishCurrentQuiz();	
+			finishCurrentQuiz();
+			window.location.assign("./dashboard.html");
 		} else {
 			incCurrentQuestionIndex();
 			location.reload();
