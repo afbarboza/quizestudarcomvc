@@ -331,5 +331,6 @@ $(document).ready(function() {
 
 		/* redirects the user to the answer quiz page */
 		window.location.assign("./answer.html")	;
+		return false;
 	});
 });
